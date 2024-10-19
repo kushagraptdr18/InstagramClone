@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+
+<style>
+    *{
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+    #centre::-webkit-scrollbar{
+        display: none;
+    }
+    /* Hide the scrollbar but keep it scrollable */
+.custom-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Ensure chat messages wrap properly */
+.message {
+    word-wrap: break-word;
+    max-width: 80%; /* Limit message width to 80% of the container */
+}
+
+</style>
+</head>
+<body>
+
+    <div id="main" class="bg-black h-full w-full flex overflow-hidden " >
+
+        <div id="nav" class="w-fit h-full pt-10 ">
+            
+            
+           
+            <div id="search" class=" py-10 px-4 absolute h-full top-[0%] w-[450px] bg-zinc-500 transition ease-in hidden">
+                
+              <i id="closeSearchBox" class="ri-close-large-line text-2xl text-white font-bold absolute top-[3%] right-[3%] cursor-pointer "></i>
+            
+                 <div class=" h-[120px] w-full border-b border-1 border-gray-300 mt-10">        
+                    <h1 class="text-white text-4xl font-semibold ">Search</h1>
+                    <h3 class="w-full mt-4 bg-zinc-700 px-2 py-2 flex items-center rounded-lg"><input id="searchInput" value="" class="h-full w-full p-2 bg-transparent outline-none border-none text-1xl text-white" type="text" placeholder="Search" > <i class="ri-close-large-line text-1xl text-white font-bold cursor-pointer"></i> </h3>
+                 </div>
+
+
+                <div class="listOfUsers mt-4">
+
+                <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+
+                     <a href="/profile/<%=user.username%>" class="cursor-pointer">
+                        <div class="flex gap-4 items-center">
+                      
+                            <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                              <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                          </div>
+                          
+                          
+                            <div class="flex flex-col gap ">
+                                <h3 class="text-[16px] text-white"><%=user.username%></h3>
+                                <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=user.name%>  </h4>
+                            </div>
+    
+    
+                        </div>
+                     </a>   
+                    
+  
+                    <button class="bg-blue-500 px-4 py-2 text-[14px] text-white rounded font-semibold ">Follow</button>
+  
+      
+                  </div>
+  
+                  
+
+                </div>
+
+            </div>
+
+            <div id="Notifications" class="py-10 px-4 absolute h-full top-[0%] w-[450px] bg-zinc-500 transition ease-in hidden">
+              <i id="closeNoticationsBox" class="ri-close-large-line text-2xl text-white font-bold absolute top-[3%] right-[3%] cursor-pointer "></i>
+
+                <h1 class="text-4xl text-white">Notifications..</h1>
+
+                <div class="options flex gap-4 mt-6">
+                    <h3 class="text-1xl text-white bg-zinc-900 p-3 Capitalize cursor-pointer rounded-full">Sent Requested</h3>
+                    <h3 class="text-1xl text-white bg-zinc-900 p-3 Capitalize cursor-pointer rounded-full">Freind Requests</h3>
+                    <h3 class="text-1xl text-white bg-zinc-900 p-3 Capitalize cursor-pointer rounded-full">Freinds</h3>
+                </div>
+                
+                <div class="line w-full h-[1px] bg-white mt-8 opacity-50"></div>
+
+                <div class="listOfNotifications mt-4">
+
+                    <% user.friendRequests.forEach(function(n){ %>
+
+                        <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+    
+                            <a href="/profile/<%=user.username%>" class="cursor-pointer">
+                               <div class="flex gap-4 items-center">
+                             
+                                   <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                                     <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                                 </div>
+                                 
+                                 
+                                   <div class="flex flex-col gap ">
+                                       <h3 class="text-[16px] text-white"><%=n.username%></h3>
+                                       <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=n.name%>  </h4>
+                                   </div>
+           
+           
+                               </div>
+                            </a>   
+                           
+                            <div class="butns flex gap-4">
+                                <a href="/accept-request/<%=n._id%>"><button class="bg-blue-800 px-4 py-2 text-[14px] text-white rounded font-semibold ">Accept</button> </a>
+                                <a href="/reject-request/<%=n._id%>"><button class="bg-blue-800 px-4 py-2 text-[14px] text-white rounded font-semibold ">Reject</button></a>    
+                            </div>
+                       
+
+         
+             
+                       </div>
+
+                    <% }) %>
+                    
+
+                    <% user.sentRequests.forEach(function(n){ %>
+
+                        <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+    
+                            <a href="/profile/<%=user.username%>" class="cursor-pointer">
+                               <div class="flex gap-4 items-center">
+                             
+                                   <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                                     <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                                 </div>
+                                 
+                                 
+                                   <div class="flex flex-col gap ">
+                                       <h3 class="text-[16px] text-white"><%=n.username%></h3>
+                                       <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=n.name%>  </h4>
+                                   </div>
+           
+           
+                               </div>
+                            </a>   
+                           
+         
+                           <button class="bg-blue-800 px-4 py-2 text-[14px] text-white rounded font-semibold ">Requested</button>
+                          
+
+         
+             
+                       </div>
+
+                    <% }) %>
+                       
+                      
+    
+                 </div>
+
+            </div>
+
+            <div class="menu flex flex-col gap-4">
+
+                <a href="/dashboard">
+                    <div class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                        <i class="ri-home-5-line text-3xl text-white "></i>
+                        
+                    </div>
+                  </a>
+
+                <div id="searchFreinds" class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-search-2-line text-3xl text-white "></i>
+                </div>
+
+               <a href="/messageBox/<%=user._id%>">
+                <div class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-messenger-line text-3xl text-white "></i>
+                    
+                </div>
+               </a>
+
+                <div id="NotificationIcons" class="navElements  flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-heart-3-line text-3xl text-white "></i>    
+                </div>
+
+                 
+                <div class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                   <a href="/profile/<%=user.username%>" class="flex gap-4 items-center">
+                    <div class="profilePhoto h-[40px] w-[40px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                        <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                    </div>
+                    
+                   </a>
+                </div>
+
+               
+
+            </div>
+
+        </div>
+
+        <div id="ChatUsers" class="w-[29%] border-r border-1 border-gray-800  h-full p-3 pr-5">
+            <div class="myProfile  flex justify-between cursor-pointer my-10 mx-2  px-1 py-1 items-center hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+
+                <a href="/profile/<%= user.username%>" class=" flex gap-4 ">
+                  <div class="profilePhoto h-[50px] w-[50px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                      <img class="h-full w-full object-cover cursor-pointer " src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                  </div>
+                  
+                  <div class="flex flex-col gap cursor-pointer  ">
+                      <h3 class="text-[18px] text-white"><%=user.username%></h3>
+                      <h4 class="text-[14px] text-white opacity-60 mt-[-5px]"><%=user.name%>  </h4>
+                  </div>
+                </a>
+  
+                  <a href="/logout" class="text-red-300 bg-gray-800 px-2 py-1 rounded ml-8"> LogOut</a>
+              </div>
+
+            <h3 class="w-full mt-4 bg-zinc-700 px-2 py-2 flex items-center rounded-lg"><input id="searchInput" value="" class="h-full w-full p-2 bg-transparent outline-none border-none text-1xl text-white" type="text" placeholder="Search" > <i class="ri-close-large-line text-1xl text-white font-bold cursor-pointer"></i> </h3>
+
+             <div class="line w-full h-[1px] bg-white opacity-50 mt-4 mb-2"></div>
+             
+             <h1 class="text-white text-2xl mb-10">Messages</h1>
+
+             <div class="listOfFreinds mt-3">
+
+                <% user.friends.forEach(function(freind){ %>
+
+                    <div keyId="<%= freind._id%>" id="<%=freind.name%>" class="myProfile flex justify-between cursor-pointer my-3 mx-2  px-1 py-1 items-center hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+
+                        <div id="<%= freind.name%>" keyId="<%= freind._id%>" class=" flex gap-4 items-center">
+                          <div id="<%= freind.name%>" keyId="<%= freind._id%>"  class="profilePhoto h-[50px] w-[50px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                              <img class="h-full w-full object-cover cursor-pointer " src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                          </div>
+                          
+                          <div id="<%= freind.name%>" keyId="<%= freind._id%>" class="flex flex-col gap cursor-pointer  ">
+                              <h3 class="text-[18px] text-white"><%=freind.username%></h3>
+                              <h4 class="text-[14px] text-white opacity-60 mt-[-5px]"><%=freind.name%>  </h4>
+                          </div>
+
+                          <%if(freind.isOnline==1){ %>
+
+                            <div id="<%= freind._id%>" class="circle  h-2 w-2 rounded-full bg-blue-800">
+
+                            </div>
+
+                          <% } else { %>
+                              
+                            <div id="<%= freind._id%>" class="circle  h-2 w-2 rounded-full bg-red-800">
+
+                            </div>
+
+
+                            <% } %>
+                        
+                        </div>
+        
+                      </div>
+
+                <% }) %>
+
+             </div>
+              
+
+        </div>
+        
+
+        <div id="chatRoom" class=" h-full w-[71%] overflow-hidden py-2">
+
+            <div id="navv" class="h-[80px] w-full border-b border-gray-300 ">
+
+                <div class="myProfile  flex justify-between cursor-pointer my-1 mx-2  px-1 py-1 items-center hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+
+                    <a href="/profile/<%= user.username%>" class=" flex gap-4  items-center">
+                      <div class="profilePhoto h-[50px] w-[50px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                          <img class="h-full w-full object-cover cursor-pointer " src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                      </div>
+                      
+                      <div class="flex flex-col gap cursor-pointer  ">
+                          <h4 class="text-[20px] text-white opacity-90 mt-[-5px]"><%=user.name%>  </h4>
+                      </div>
+                    </a>
+      
+                      <div class="icons flex gap-7">
+                        <img class="h-7" src="https://pngimg.com/uploads/phone/phone_PNG49047.png" alt="">
+                        <img class="h-7" src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/video-1024.png" alt="">
+                      </div>
+                  </div>
+
+               
+
+            </div>
+
+            <div class="chatSection h-[80%] w-full text-white overflow-y-auto p-4 custom-scrollbar">
+                <!-- Messages will be dynamically inserted here -->
+            </div>
+            
+
+            <div class="chatTyping h-[100px]  bg-zinc-900 p-4 ">
+              <h1 class="flex items-center gap-4 pl-1 border-[1px] border-zinc-500  rounded-full h-[40px]">
+                😂
+                
+                <input id="messageInput" type="text" placeholder="Message..." class=" w-full h-fit  border-none outline-none text-white border-white bg-transparent ">
+                <button id="sendButton" class="bg-white p-2 text-1xl rounded-full w-24">Send</button>    
+
+              </h1>
+            </div>
+           
+            
+        </div>
+       
+       
+        
+
+
+    </div>
+
+</body>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js" integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+
+    function openSearchBox(){
+     
+        document.querySelector('#searchFreinds').addEventListener("click",function(){
+            document.querySelector("#search").classList.remove("hidden")
+        })
+
+        document.querySelector('#closeSearchBox').addEventListener('click',function(){
+            document.querySelector("#search").classList.add("hidden")
+
+        })
+    }
+
+    openSearchBox()
+    
+    function searchFriend(){
+            
+        document.querySelector("#searchInput").addEventListener("input", async function(e){
+
+            let query = document.querySelector("#searchInput").value;
+
+            if (!query.trim()) {document.querySelector(".listOfUsers").innerHTML=''; }
+
+            try{
+                const response = await fetch(`/allUsers/search?query=${query}`);
+                const users = await response.json();
+                console.log(users);
+                
+                const listOfUsers = document.querySelector(".listOfUsers");
+                listOfUsers.innerHTML='';
+
+                if(users.length==0){
+                    listOfUsers.innerHTML='<p class="text-white text-1xl">No users found</p>';
+                }else{
+                    users.forEach(function(user){
+                        listOfUsers.innerHTML += `
+                            
+                <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+
+                     <a href="/profile/${user.username}" class="cursor-pointer">
+                        <div class="flex gap-4 items-center">
+                      
+                            <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                              <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                          </div>
+                          
+                          
+                            <div class="flex flex-col gap ">
+                                <h3 class="text-[16px] text-white">${user.username}</h3>
+                                <h4 class="text-[12px] text-white opacity-60 mt-[-5px]">${user.name}</h4>
+                            </div>
+    
+    
+                        </div>
+                     </a>   
+                    
+  
+                    <button class="bg-blue-500 px-4 py-2 text-[14px] text-white rounded font-semibold ">Follow</button>
+  
+      
+                  </div>
+                    
+                        `
+                    })
+                }
+                
+
+            }catch(error){
+                console.error('Error fetching users:', error);
+            }
+                
+
+
+        
+            
+
+         })
+    }
+
+    searchFriend()
+
+
+    function openNotification(){
+        document.querySelector("#NotificationIcons").addEventListener("click",function(){
+            console.log(" hello");
+            
+            document.querySelector("#Notifications").classList.remove("hidden")    
+        })
+
+        document.querySelector("#closeNoticationsBox").addEventListener("click",function(){
+            document.querySelector("#Notifications").classList.add("hidden")    
+        })
+
+
+    }
+    
+    openNotification()
+
+const socket = io();
+var senderUser = '<%= user._id %>';
+var receiverUser = "";
+
+// Emit the sender user's ID to mark them as online
+socket.emit("userId", senderUser);
+
+// Handle when a user goes online
+socket.on("online", function(userId) {
+    const userElement = document.getElementById(userId);
+    if (userElement) {
+        userElement.querySelector(".circle").classList.remove("bg-red-800");
+        userElement.querySelector(".circle").classList.add("bg-blue-800"); // Online, blue circle
+    }
+});
+
+// Handle when a user goes offline
+socket.on("offline", function(userId) {
+    const userElement = document.getElementById(userId);
+    if (userElement) {
+        userElement.querySelector(".circle").classList.remove("bg-blue-800");
+        userElement.querySelector(".circle").classList.add("bg-red-800"); // Offline, red circle
+    }
+});
+
+
+function scrollToBottom() {
+    const chatSection = document.querySelector(".chatSection");
+    chatSection.scrollTop = chatSection.scrollHeight;
+}
+
+function chatUser() {
+    document.querySelector(".listOfFreinds").addEventListener("click", function(dets) {
+        const targetElement = dets.target.closest("[id][keyId]");
+        
+        if (targetElement) {
+            document.querySelector("#navv h4").innerHTML = targetElement.id; // Set chat header to the selected user
+            receiverUser = targetElement.getAttribute("keyId"); // Get the receiver's user ID
+            
+            // Clear previous chats before loading new ones
+            document.querySelector(".chatSection").innerHTML = "";
+
+            // Emit event to load previous chats between sender and receiver
+            socket.emit("loadChat", { sender_id: senderUser, receiver_id: receiverUser });
+            
+        }
+    });
+
+    // Handle loading previous chat history
+    socket.on("previousChat", function(chats) {
+    // Ensure chatSection is cleared first (avoid duplicate messages)
+    const chatSection = document.querySelector(".chatSection");
+    chatSection.innerHTML = "";
+
+    // Loop through previous chat messages and render them
+    chats.forEach(function(chat) {
+        const formattedTime = new Date(chat.createdAt).toLocaleTimeString(); // Format the timestamp
+
+        if (chat.sender_Id === senderUser) {
+            // Sent messages by the current user
+            chatSection.innerHTML += `            
+               <div class="message user bg-blue-500 w-fit max-w-[80%] text-white p-3 rounded-2xl mb-2 ml-auto">
+    <h1 class="text-white break-words">${chat.message}</h1>
+    <div class="flex justify-end">
+        <span class="text-xs text-gray-400 mt-1">${formattedTime}</span> <!-- Time display aligned to the right -->
+    </div>
+</div>`;
+        } else {
+            // Received messages from the opponent
+            chatSection.innerHTML += `
+                <div class="message opponent bg-zinc-500 p-3 rounded-lg w-fit mb-2 ml-0">
+                    <h1 class="text-white break-words">${chat.message}</h1>
+                    <span class="text-xs text-gray-400 block text-left mt-1">${formattedTime}</span> <!-- Time display -->
+                </div>`;
+        }
+    });
+
+    // Scroll to the bottom after loading all previous chats
+    scrollToBottom();
+});
+
+}
+
+// Initialize chat user selection handler
+chatUser();
+
+
+
+// Function to send a new message
+const sendMessage = async (senderId, receiverId, message) => {
+    try {
+        const response = await axios.post('/saveChat', {
+            sender_Id: senderId,
+            receiver_Id: receiverId,
+            message: message
+        });
+        
+        console.log('Message sent successfully:', response.data);
+
+        // Emit the new message to the server
+        socket.emit("userMessage", response.data.data);
+
+        
+        const chatMessage = response.data.data;
+        const formattedTime = new Date(chatMessage.createdAt).toLocaleTimeString(); // Format the timestamp
+       console.log(formattedTime);
+       
+        
+        
+        // Add the sent message to the chat section
+        document.querySelector(".chatSection").innerHTML += `
+    
+           <div class="message user bg-blue-500 w-fit text-white p-3 rounded-lg mb-2 ml-auto">
+                <h1 class="text-white break-words">${chatMessage.message}</h1>
+                <span class="text-xs text-gray-400 block text-right mt-1">${formattedTime}</span> <!-- Time display -->
+            </div>
+
+`;
+
+scrollToBottom();
+    } catch (error) {
+        console.error('Error sending message:', error);
+    }
+};
+
+// Event listener for the send button
+document.querySelector("#sendButton").addEventListener("click", function() {
+    var inputVal = document.getElementById('messageInput');
+    var message = inputVal.value;
+    inputVal.value = ""; // Clear the input field after sending
+    
+    // Send the message to the server
+    sendMessage(senderUser, receiverUser, message);
+});
+
+// Handle incoming messages from the opponent
+socket.on("oppoMessage", function(data) {
+    if (data.receiver_Id === senderUser && data.sender_Id === receiverUser) {
+        // Format the received timestamp
+        const formattedTime = new Date(data.createdAt).toLocaleTimeString();
+
+        // Add the received message to the chat section with time
+        document.querySelector(".chatSection").innerHTML += `
+            <div class="message opponent bg-zinc-500 p-3 rounded-lg w-fit mb-2 ml-0">
+                <h1 class="text-white break-words">${data.message}</h1>
+                <span class="text-xs text-gray-400 block text-left mt-1">${formattedTime}</span> <!-- Time display -->
+            </div>`;
+    } else {
+        console.log("Message from a different user.");
+    }
+});
+
+
+
+</script>
+
+</html>

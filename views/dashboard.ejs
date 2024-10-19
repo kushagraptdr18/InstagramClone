@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+
+<style>
+    #centre::-webkit-scrollbar{
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+    <div id="main" class="bg-black h-full w-full flex " >
+
+        <div id="nav" class="w-[20%] h-full ">
+            
+            <div class="logo h-[40px] w-fit mx-7 my-10 "> <!-- Center the container -->
+                <img class="h-full w-full object-contain" src="https://www.pngkey.com/png/full/28-287308_instagram-logo-text-white.png" alt="Instagram Logo">
+            </div>
+
+           
+            <div id="search" class=" py-10 px-4 absolute h-full top-[0%] w-[450px] bg-zinc-500 transition ease-in hidden">
+                
+              <i id="closeSearchBox" class="ri-close-large-line text-2xl text-white font-bold absolute top-[3%] right-[3%] cursor-pointer "></i>
+            
+                 <div class=" h-[120px] w-full border-b border-1 border-gray-300 mt-10">        
+                    <h1 class="text-white text-4xl font-semibold ">Search</h1>
+                    <h3 class="w-full mt-4 bg-zinc-700 px-2 py-2 flex items-center rounded-lg"><input id="searchInput" value="" class="h-full w-full p-2 bg-transparent outline-none border-none text-1xl text-white" type="text" placeholder="Search" > <i class="ri-close-large-line text-1xl text-white font-bold cursor-pointer"></i> </h3>
+                 </div>
+
+
+                <div class="listOfUsers mt-4">
+
+                <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+
+                     <a href="/profile/<%=user.username%>" class="cursor-pointer">
+                        <div class="flex gap-4 items-center">
+                      
+                            <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                              <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                          </div>
+                          
+                          
+                            <div class="flex flex-col gap ">
+                                <h3 class="text-[16px] text-white"><%=user.username%></h3>
+                                <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=user.name%>  </h4>
+                            </div>
+    
+    
+                        </div>
+                     </a>   
+                    
+  
+                    <button class="bg-blue-500 px-4 py-2 text-[14px] text-white rounded font-semibold ">Follow</button>
+  
+      
+                  </div>
+  
+                  
+
+                </div>
+
+            </div>
+
+            <div id="createPost" class="min-h-full w-full absolute top-[0]  bg-zinc-700 opacity-90 hidden">
+                <i id="closeCreatePost" class="ri-close-large-line text-4xl  text-white cursor-pointer absolute right-5 top-5  "></i>
+
+                <div class="postCreate  max-h-[650px] pt-7 w-[550px] bg-zinc-900 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-lg shadow-lg overflow-y-auto">
+                    <h3 class="text-white text-4xl text-center">Create Post</h3>
+                    
+                    <form action="/postCreate/<%= user._id%>" class="flex flex-col gap-4 items-center" method="post" enctype="multipart/form-data">
+                        <i class="ri-image-line text-[80px] text-white"></i>
+            
+                        <div class="custom-file-upload bg-blue-500 px-4 py-2 text-white rounded cursor-pointer">
+                            <label for="fileInput" id="fileLabel" class="text-2xl cursor-pointer">Select Photo</label>
+                            <input type="file" id="fileInput" name="image" accept="image/* " style="display: none;">
+                        </div>
+            
+                        <!-- Image Preview -->
+                        <div>
+                            <img id="imagePreview" class="image-preview h-[400px] object-cover rounded-lg" src="" alt="Image Preview" style="display: none;">
+                        </div>
+            
+                        <!-- Caption Textarea -->
+                        <textarea id="captionInput" name="caption" class="w-[80%] h-[100px] border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-white placeholder-gray-500 hidden " placeholder="Write your Comment"></textarea>
+            
+                        <!-- Post Button -->
+                        <input id="PostUploadButton" type="submit" value="Post" class="bg-blue-500 px-10 py-2 text-2xl text-white cursor-pointer hidden mb-2" >
+                    </form>
+                </div>
+            
+
+            </div>
+
+            <div id="Notifications" class="py-10 px-4 absolute h-full top-[0%] w-[450px] bg-zinc-500 transition ease-in hidden">
+              <i id="closeNoticationsBox" class="ri-close-large-line text-2xl text-white font-bold absolute top-[3%] right-[3%] cursor-pointer "></i>
+
+                <h1 class="text-4xl text-white">Notifications..</h1>
+
+                <div class="options flex gap-4 mt-6">
+                    <h3 class="text-1xl text-white bg-zinc-900 p-3 Capitalize cursor-pointer rounded-full">Sent Requested</h3>
+                    <h3 class="text-1xl text-white bg-zinc-900 p-3 Capitalize cursor-pointer rounded-full">Freind Requests</h3>
+                    <h3 class="text-1xl text-white bg-zinc-900 p-3 Capitalize cursor-pointer rounded-full">Freinds</h3>
+                </div>
+                
+                <div class="line w-full h-[1px] bg-white mt-8 opacity-50"></div>
+
+                <div class="listOfNotifications mt-4">
+
+                    <% user.friendRequests.forEach(function(n){ %>
+
+                        <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+    
+                            <a href="/profile/<%=user.username%>" class="cursor-pointer">
+                               <div class="flex gap-4 items-center">
+                             
+                                   <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                                     <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                                 </div>
+                                 
+                                 
+                                   <div class="flex flex-col gap ">
+                                       <h3 class="text-[16px] text-white"><%=n.username%></h3>
+                                       <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=n.name%>  </h4>
+                                   </div>
+           
+           
+                               </div>
+                            </a>   
+                           
+                            <div class="butns flex gap-4">
+                                <a href="/accept-request/<%=n._id%>"><button class="bg-blue-800 px-4 py-2 text-[14px] text-white rounded font-semibold ">Accept</button> </a>
+                                <a href="/reject-request/<%=n._id%>"><button class="bg-blue-800 px-4 py-2 text-[14px] text-white rounded font-semibold ">Reject</button></a>    
+                            </div>
+                       
+
+         
+             
+                       </div>
+
+                    <% }) %>
+                    
+
+                    <% user.sentRequests.forEach(function(n){ %>
+
+                        <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+    
+                            <a href="/profile/<%=user.username%>" class="cursor-pointer">
+                               <div class="flex gap-4 items-center">
+                             
+                                   <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                                     <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                                 </div>
+                                 
+                                 
+                                   <div class="flex flex-col gap ">
+                                       <h3 class="text-[16px] text-white"><%=n.username%></h3>
+                                       <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=n.name%>  </h4>
+                                   </div>
+           
+           
+                               </div>
+                            </a>   
+                           
+         
+                           <button class="bg-blue-800 px-4 py-2 text-[14px] text-white rounded font-semibold ">Requested</button>
+                          
+
+         
+             
+                       </div>
+
+                    <% }) %>
+                       
+                      
+    
+                 </div>
+
+            </div>
+
+            <div class="menu flex flex-col gap-4">
+
+                <a href="/dashboard">
+                    <div class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                        <i class="ri-home-5-line text-3xl text-white "></i>
+                        <h3 class="text-[18px] text-white">Home</h3>
+                    </div>
+                  </a>
+
+                <div id="searchFreinds" class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-search-2-line text-3xl text-white "></i>
+                    <h3 class="text-[18px] text-white">Search</h3>
+                </div>
+
+               <a href="/messageBox/<%=user._id%>">
+                <div class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-messenger-line text-3xl text-white "></i>
+                    <h3 class="text-[18px] text-white">Messages</h3>
+                </div>
+               </a>
+
+                <div id="NotificationIcons" class="navElements  flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-heart-3-line text-3xl text-white "></i>
+                    <h3 class="text-[18px] text-white">Notifications</h3>
+                </div>
+
+                <div id="clickOnPost" class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                    <i class="ri-add-circle-line text-3xl text-white "></i>
+                    <h3 class="text-[18px] text-white">Create Post</h3>
+                </div>
+                 
+                <div class="navElements flex gap-4 items-center mx-7 cursor-pointer hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+                   <a href="/profile/<%=user.username%>" class="flex gap-4 items-center">
+                    <div class="profilePhoto h-[40px] w-[40px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                        <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                    </div>
+                    <h3 class="text-[18px] text-white">Profile</h3>
+                   </a>
+                </div>
+
+               
+
+            </div>
+
+        </div>
+
+    
+        <div id="centre" class="w-[55%] h-full px-8 overflow-y-auto  ">
+
+            <div class="AllStories  h-fit my-5 mx-7  flex gap-4 items-center overflow-x-auto whitespace-nowrap">
+               
+                <div class="story flex flex-col  gap-1 items-center">
+                    <div class="circle h-[80px] w-[80px] rounded-full overflow-hidden bg-blue-500 border-[2px] flex-shrink-0"> <!-- Add flex-shrink-0 -->
+                        <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9kZWwlMjBnaXJrc3xlbnwwfHwwfHx8MA%3D%3D" alt="">
+                    </div>
+                    <h1 class="text-white text-1xl truncate max-w-[100px] overflow-hidden">Alia Bha Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea suscipit debitis non. Consequatur voluptatem voluptatum dignissimos blanditiis laudantium id assumenda perspiciatis provident perferendis nesciunt excepturi omnis, qui tempore vitae odio esse. Accusamus veniam doloribus incidunt, deleniti debitis pariatur fuga minus voluptate id recusandae facere velit quibusdam, libero aliquid temporibus placeat iste expedita eos? Architecto vel, sapiente illo sunt libero sit minima modi explicabo debitis unde cupiditate saepe ratione iusto labore facilis optio est! Molestias consectetur quam, possimus explicabo, repudiandae ut nam quod laudantium temporibus ipsam tenetur cupiditate qui hic ab!tt rani ksflahl lkdjfal</h1>
+                </div>
+
+                <div class="story flex flex-col  gap-1 items-center">
+                    <div class="circle h-[80px] w-[80px] rounded-full overflow-hidden bg-blue-500 border-[2px] flex-shrink-0"> <!-- Add flex-shrink-0 -->
+                        <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bW9kZWwlMjBnaXJrc3xlbnwwfHwwfHx8MA%3D%3D" alt="">
+                    </div>
+                    <h1 class="text-white text-1xl truncate max-w-[100px] overflow-hidden">Priya Rani</h1>
+                </div>
+
+               
+               
+            </div>
+
+            <div class="AllPosts">      
+                <!-- Iterate over posts and display them -->
+                <% posts.forEach(post => { %>
+                  <div class="post h-fit w-[450px] border-b border-gray-300 mx-auto my-10">
+                    <div class="postDetails items-center flex justify-between cursor-pointer px-1 py-2">
+                      <div class="flex gap-4 items-center">
+                        <div class="profilePhoto h-[40px] w-[40px] rounded-full overflow-hidden">
+                          <img class="h-full w-full object-cover" src="<%= post.user.profilePhoto %>" alt="Profile Photo">
+                        </div>
+                        <h3 class="text-[18px] text-white"><%= post.user.username %></h3>
+                      </div>
+                      <i class="ri-more-2-line text-white text-2xl"></i>
+                    </div>
+                    
+                    <img class="h-[80%] w-full object-cover" src="../images/posts/<%= post.img %>" alt="Post Image">
+                     
+                    <div class="mt-2  pb-3">
+                      <div class="icons flex gap-7 items-center">
+                        <i class="ri-heart-3-line text-2xl text-white"></i>
+                        <i class="ri-chat-3-line text-2xl text-white"></i>
+                        <i class="ri-share-circle-fill text-2xl text-white"></i>
+                      </div>
+                      <h3 class="text-1xl mt-2 text-white"><span><%=post.likes.length%></span> likes</h3>
+                    </div>
+
+                    <h3 class="text-white text-1xl mt-1 mb-4"> <span class="text-1xl mr-3 opacity-50"><%=post.user.username%></span><%= post.caption%></h3>    
+
+                  </div>
+                <% }) %>
+              </div>
+              
+            
+        
+        </div>
+
+       
+       
+        <div id="profile" class="w-[25%] h-full ">
+
+            <div class="myProfile  flex gap-4 my-10 ms-10  px-1 py-1 items-center hover:bg-neutral-600 transition ease-in rounded px-1 py-2">
+
+              <a href="/profile/<%= user.username%>" class=" flex gap-4 ">
+                <div class="profilePhoto h-[50px] w-[50px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                    <img class="h-full w-full object-cover cursor-pointer " src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                </div>
+                
+                <div class="flex flex-col gap cursor-pointer  ">
+                    <h3 class="text-[18px] text-white"><%=user.username%></h3>
+                    <h4 class="text-[14px] text-white opacity-60 mt-[-5px]"><%=user.name%>  </h4>
+                </div>
+              </a>
+
+                <a href="/logout" class="text-red-300 bg-gray-800 px-2 py-1 rounded ml-8"> LogOut</a>
+            </div>
+
+            <div class="suggestionBox mt-10  mx-7 flex flex-col gap-4">
+                
+                <h1 class="text-white opacity-80 text-[18px] font-bold">Suggested For you</h1>
+                
+                <div class="SuggestedProfile  flex justify-between  cursor-pointer px-1 py-1 items-center" >
+
+                  <div class="flex gap-4 items-center">
+                    <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                        <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                    </div>
+                    
+                    <div class="flex flex-col gap ">
+                        <h3 class="text-[16px] text-white"><%=user.username%></h3>
+                        <h4 class="text-[12px] text-white opacity-60 mt-[-5px]"><%=user.name%>  </h4>
+                    </div>
+                  </div>
+
+                  <button class="bg-blue-500 px-4 py-2 text-1xl text-white rounded font-semibold ">Follow</button>
+
+    
+                </div>
+
+                
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</body>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script>
+
+    function openSearchBox(){
+     
+        document.querySelector('#searchFreinds').addEventListener("click",function(){
+            document.querySelector("#search").classList.remove("hidden")
+        })
+
+        document.querySelector('#closeSearchBox').addEventListener('click',function(){
+            document.querySelector("#search").classList.add("hidden")
+
+        })
+    }
+
+    openSearchBox()
+    
+    function searchFriend(){
+            
+        document.querySelector("#searchInput").addEventListener("input", async function(e){
+
+            let query = document.querySelector("#searchInput").value;
+
+            if (!query.trim()) {document.querySelector(".listOfUsers").innerHTML=''; }
+
+            try{
+                const response = await fetch(`/allUsers/search?query=${query}`);
+                const users = await response.json();
+                console.log(users);
+                
+                const listOfUsers = document.querySelector(".listOfUsers");
+                listOfUsers.innerHTML='';
+
+                if(users.length==0){
+                    listOfUsers.innerHTML='<p class="text-white text-1xl">No users found</p>';
+                }else{
+                    users.forEach(function(user){
+                        listOfUsers.innerHTML += `
+                            
+                <div class="SearchedProfile flex justify-between  px-1 py-1 items-center" >
+
+                     <a href="/profile/${user.username}" class="cursor-pointer">
+                        <div class="flex gap-4 items-center">
+                      
+                            <div class="profilePhoto h-[30px] w-[30px] rounded-full overflow-hidden"> <!-- Added overflow-hidden to hide excess parts -->
+                              <img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1482849737880-498de71dda8d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGFuZHNvbWUlMjBib3l8ZW58MHx8MHx8fDA%3D" alt="Profile Photo">
+                          </div>
+                          
+                          
+                            <div class="flex flex-col gap ">
+                                <h3 class="text-[16px] text-white">${user.username}</h3>
+                                <h4 class="text-[12px] text-white opacity-60 mt-[-5px]">${user.name}</h4>
+                            </div>
+    
+    
+                        </div>
+                     </a>   
+                    
+  
+                    <button class="bg-blue-500 px-4 py-2 text-[14px] text-white rounded font-semibold ">Follow</button>
+  
+      
+                  </div>
+                    
+                        `
+                    })
+                }
+                
+
+            }catch(error){
+                console.error('Error fetching users:', error);
+            }
+                
+
+
+        
+            
+
+         })
+    }
+
+    searchFriend()
+
+    function postPopOpen(){
+        document.querySelector("#clickOnPost").addEventListener("click",function(){ 
+            console.log("sjdfkl");
+            
+            document.querySelector("#createPost").classList.remove("hidden");
+        })
+
+        document.querySelector("#closeCreatePost").addEventListener("click",function(){ 
+            document.querySelector("#createPost").classList.add("hidden");
+        })
+        
+
+    }
+    postPopOpen()
+
+    function imagesShow(){
+        const fileInput = document.getElementById('fileInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    // Add event listener to handle file input changes  
+    fileInput.addEventListener('change', function(event) {
+      const file = event.target.files[0]; // Get the selected file
+
+      if (file) {
+        const reader = new FileReader();
+
+        // Once the file is loaded, display it
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block'; // Show the image preview
+          document.querySelector("#captionInput").classList.remove('hidden');
+          document.querySelector("#PostUploadButton").classList.remove("hidden")
+        }
+
+        // Read the image file as a Data URL
+        reader.readAsDataURL(file);
+      }
+    });
+    }
+
+    imagesShow()
+
+    function openNotification(){
+        document.querySelector("#NotificationIcons").addEventListener("click",function(){
+            document.querySelector("#Notifications").classList.remove("hidden")    
+        })
+
+        document.querySelector("#closeNoticationsBox").addEventListener("click",function(){
+            document.querySelector("#Notifications").classList.add("hidden")    
+        })
+
+
+    }
+    
+    openNotification()
+
+   
+    const socket = io();
+       var senderUser ='<%= user._id%>'
+       var receiverUser = ""
+       
+       
+       socket.emit("userId",senderUser)
+     
+      
+      
+
+
+
+</script>
+
+</html>
